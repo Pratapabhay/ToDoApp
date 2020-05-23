@@ -28,6 +28,7 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
-    "react-hot-loader": "^4.12.21"
+    "react-hot-loader": "^4.12.21",
+    "react-router-dom": "^5.2.0"
   }
 }
