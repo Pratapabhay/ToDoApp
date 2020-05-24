@@ -1,116 +1,100 @@
 var express = require('express');
 var router = express.Router();
+var auth = require('../middleware/auth');
+var jwt = require('jsonwebtoken');
+var config = require('../config');
 var bodyParser = require('body-parser');
-var todo = require('../models/todoSchema');
-
-const GET_ALL_TODOS = '/api/todos'
-const GET_BY_USERNAME = '/api/todos/:uname';
-const GET_BY_ID = '/api/todos/:id';
-const UPDATE_TODO = '/api/todo';
-const DELETE_TODO = '/api/todo';
-
+var todos = require('../models/todoSchema');
+const User = require('../models/user');
 
 
 // @route    /api/todos
 // desc      Todo Test route
 // @access   Public
-router.get('/', (req, res) => res.send('Todo Route'));
+router.get('/test', (req, res) => res.send('Todo Route'));
 
 
 // @route    /api/todos
-// desc      Test route, Return all todos
+// desc      Return all todos from user token
 // @access   Private
-router.get(GET_ALL_TODOS, function (req, res) {
+router.get('/', auth, async function (req, res) {
 
-    var seedData = [
-        {
-            username: 'Pratap',
-            todo: 'Check Web',
-            isDone: false,
-            hasAttachment: false
-        },
-        {
-            username: 'Abhay',
-            todo: 'Learn Node',
-            isDone: false,
-            hasAttachment: false
-        },
-        {
-            username: 'Pratap',
-            todo: 'Learn Express',
-            isDone: false,
-            hasAttachment: false
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const currTodo = await todos.find({ userId: user.id });
+        if (!currTodo) {
+            console.log('ToDo not found');
+            res.status(404).json('Not Found');
         }
-    ];
-    todo.create(seedData, function (err, result) {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-
-
-// @route    /api/todos
-// desc      Return all todos for a user
-// @access   Private
-router.get(GET_BY_USERNAME, function (req, res) {
-    todo.find({ username: req.params.uname }, function (err, result) {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-
-// @route    /api/todos/:id
-// desc      Return particular todo
-// @access   Private
-router.get(GET_BY_ID, function (req, res) {
-    todo.findById({ _id: req.params.id }, function (err, result) {
-        if (err) throw err;
-        res.send(result);
-    });
+        res.send(currTodo);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json('Server Error');
+    }
 });
 
 
 // @route    /api/todo
-// desc      Update todo
+// desc      Update todo with given id
 // @access   Private
-router.post(UPDATE_TODO, function (req, res) {
+router.put('/', auth, async (req, res) => {
 
-    if (req.body.id) {
-        todo.findByIdAndUpdate(req.body.id, {
-            username: req.body.username,
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+
+        await todos.findByIdAndUpdate(req.body.id, {
+            userId: req.user.id,
+            id: req.body.id,
             todo: req.body.todo,
             isDone: req.body.isDone,
             hasAttachment: req.body.hasAttachment
-        }, function (err, result) {
-            if (err) throw err;
+        });
+        res.status(200).json('ToDo Updated');
 
-            res.send(result);
-        });
-    } else {
-        todo.save({
-            username: req.body.username,
-            todo: req.body.todo,
-            isDone: req.body.isDone,
-            hasAttachment: req.body.hasAttachment
-        }, function (err, result) {
-            if (err) throw err;
-            res.send(result);
-        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json('Server Error');
     }
 });
 
+
+// @route    /api/todo
+// desc      Post New ToDo
+// @access   Private
+router.post('/', auth, async (req, res) => {
+
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+
+        await todos.create({
+            userId: req.user.id,
+            todo: req.body.todo,
+            isDone: req.body.isDone,
+            hasAttachment: req.body.hasAttachment
+        });
+        res.status(200).json('ToDo Added');
+    } catch (error) {
+        console.log(error);
+        res.status(500).json('Server Error')
+    }
+});
 
 
 // @route    /api/todo
 // desc      Delete todo
 // @access   Private
-router.delete(DELETE_TODO, function (req, res) {
-    todo.findByIdAndDelete(req.body.id, function (err, result) {
-        if (err) throw err;
-        res.send('Success');
-    })
+router.delete('/', auth, async (req, res) => {
+
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+
+        await todos.findByIdAndDelete(req.body.id);
+        res.status(200).json('ToDo Deleted');
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json('Server Error');
+    }
 });
 
 module.exports = router;
