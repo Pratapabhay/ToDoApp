@@ -7,7 +7,8 @@ module.exports = function (req, res, next) {
 
     // Check if token
     if (!token) {
-        res.send(400).json({ msg: 'Token not found' });
+        console.log('Token Not found')
+        res.status(400).json({ msg: 'Token not found' });
     }
 
     // Verify token using jwt

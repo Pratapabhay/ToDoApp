@@ -1,6 +1,8 @@
 import React from "react";
 import Todos from './components/todos';
 import Login from './components/login';
+import SignUp from './components/signup';
+
 
 import {
     BrowserRouter as Router,
@@ -23,6 +25,10 @@ const routes = [
     {
         path: "/login",
         component: Login,
+    },
+    {
+        path: "/signup",
+        component: SignUp,
     }
 ];
 
@@ -36,6 +42,9 @@ export default function Routes() {
                     </Route>
                     <Route path="/login">
                         <Login />
+                    </Route>
+                    <Route path="/register">
+                        <SignUp />
                     </Route>
                 </Switch>
             </div>
