@@ -18,7 +18,7 @@ router.get('/test', (req, res) => res.send('Todo Route'));
 // desc      Return all todos from user token
 // @access   Private
 router.get('/', auth, async function (req, res) {
-
+    console.log('Requested ToDos');
     try {
         const user = await User.findById(req.user.id).select('-password');
         const currTodo = await todos.find({ userId: user.id });
@@ -28,7 +28,7 @@ router.get('/', auth, async function (req, res) {
         }
         res.send(currTodo);
     } catch (error) {
-        console.log(error);
+        console.log('HEre', error);
         res.status(500).json('Server Error');
     }
 });

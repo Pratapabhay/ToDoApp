@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var app = express();
 var config = require('./config');
@@ -20,6 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+
+// For CoRS
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 console.log(config.getDBConnectionString());
 mongoose.connect(config.getDBConnectionString(), { useNewUrlParser: true, useUnifiedTopology: true });

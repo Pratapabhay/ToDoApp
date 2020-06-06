@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Input, Form, Button } from 'element-react';
 import 'element-theme-default';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom'
-
 class Login extends Component {
 
     constructor(props) {
@@ -11,25 +9,29 @@ class Login extends Component {
 
         this.state = {
             form: {
+                name: null,
                 email: null,
-                password: null
+                password: null,
             },
-            isLoginSuccessful: false,
             token: null,
             rules: {
+                name: [
+                    { required: true, message: 'Username', trigger: 'blur' }
+                ],
                 email: [
-                    { required: true, message: 'Email is not Valid', trigger: 'blur' }
+                    { required: true, message: 'Email', trigger: 'blur' }
                 ],
                 password: [
-                    { required: true, message: 'Password is not Valid', trigger: 'change' }
+                    { required: true, message: 'Password', trigger: 'change' }
                 ]
             }
         }
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         let body = {
+            name: this.state.form.name,
             email: this.state.form.email,
             password: this.state.form.password,
         }
@@ -38,14 +40,13 @@ class Login extends Component {
                 console.log('submit!');
                 axios({
                     method: 'post',
-                    url: 'http://localhost:5000/api/auth',
+                    url: 'http://localhost:5000/api/users',
                     data: body
                 })
                     .then(res => {
                         const token = res.data;
                         this.setState({
-                            token: token,
-                            isLoginSuccessful: true,
+                            form: Object.assign({}, this.state.token, { token: token })
                         });
                     })
                     .catch((err) => {
@@ -60,6 +61,7 @@ class Login extends Component {
     };
 
     onChange(key, value) {
+        console.log(key, value)
         this.setState({
             form: Object.assign({}, this.state.form, { [key]: value })
         });
@@ -67,11 +69,6 @@ class Login extends Component {
 
 
     render() {
-
-        if (this.state.isLoginSuccessful) {
-            return <Redirect to='/' />;
-        }
-
         let centering = {
             height: '50vh',
             display: 'flex',
@@ -88,6 +85,15 @@ class Login extends Component {
                     rules={this.state.rules}
                     labelWidth="120"
                     labelPosition="top">
+                    <Form.Item
+                        label="Name"
+                        prop="name">
+                        <Input
+                            value={this.state.form.name}
+                            onChange={this.onChange.bind(this, 'name')}>
+                        </Input>
+                    </Form.Item>
+
                     <Form.Item
                         label="Email"
                         prop="email">
@@ -109,7 +115,7 @@ class Login extends Component {
                             type="primary"
                             size="medium"
                             onClick={this.handleSubmit.bind(this)}>
-                            Login
+                            Sign Up
                             </Button>
                     </Form.Item>
                 </Form>
