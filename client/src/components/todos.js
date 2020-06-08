@@ -3,6 +3,8 @@ import { Checkbox, Button, Table } from 'element-react';
 import axios from 'axios';
 import AddTodo from './addTodo'
 import { connect } from 'react-redux';
+import * as actionCreators from '../store/actions';
+
 
 class Todos extends Component {
 
@@ -38,7 +40,7 @@ class Todos extends Component {
                             <Button
                                 type="text"
                                 size="small"
-                                onClick={this.deleteTodo.bind(this, index)}>
+                                onClick={this.props.DELETE_TODO}>
                                 Delete
                             </Button>
                         </span>
@@ -159,9 +161,9 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        ADD_TODO: () => dispatch({ type: 'ADD_TODO' }),
-        UPDATE_TODO: () => dispatch({ type: 'UPDATE_TODO' }),
-        DELETE_TODO: () => dispatch({ type: 'DELETE_TODO' })
+        ADD_TODO: (payload) => dispatch(actionCreators.addTodo(payload)),
+        UPDATE_TODO: (payload) => dispatch(actionCreators.updateTodo(payload)),
+        DELETE_TODO: (payload) => dispatch(actionCreators.deleteTodo(payload))
     }
 }
 

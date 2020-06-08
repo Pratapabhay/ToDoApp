@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Form, Checkbox, Input } from 'element-react';
+import { connect } from 'react-redux';
+import * as actionCreators from '../store/actions';
+
 
 class AddTodo extends React.Component {
     constructor() {
@@ -38,12 +41,14 @@ class AddTodo extends React.Component {
             })
     }
 
+
     onChange(key, value) {
-        console.log(value);
         this.setState({
             todo: Object.assign({}, this.state.todo, { [key]: value })
         });
     }
+
+
     render() {
         return (
             <div>
@@ -75,7 +80,11 @@ class AddTodo extends React.Component {
                         <Button
                             type="primary"
                             size="medium"
-                            onClick={this.addTodo.bind(this)}>
+                            onClick={this.props.ADD_TODO({
+                                todo: this.state.todo.todo,
+                                isDone: this.state.todo.isDone,
+                                hasAttachment: this.state.todo.hasAttachment
+                            })}>
                             Add Todo
                             </Button>
                     </Form.Item>
@@ -86,4 +95,18 @@ class AddTodo extends React.Component {
     }
 }
 
-export default AddTodo;
+const mapStateToProps = (state) => {
+    return {
+        storeTodos: state.todos,
+    }
+}
+
+const mapActionsToProps = (dispatch) => {
+    return {
+        ADD_TODO: (payload) => dispatch(actionCreators.addTodo(payload)),
+        UPDATE_TODO: (payload) => dispatch(actionCreators.updateTodo(payload)),
+        DELETE_TODO: (payload) => dispatch(actionCreators.deleteTodo(payload))
+    }
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(AddTodo);
