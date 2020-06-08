@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-
+import { ADD_TODO, UPDATE_TODO, DELETE_TODO } from '../store/actions';
 
 
 const initialState = {
@@ -29,12 +29,14 @@ const initialState = {
 
 // Reducer
 const rootReducer = (state = initialState, action) => {
-    if (action.type == 'ADD_TODO') {
+    if (action.type == ADD_TODO) {
+        console.log('ADD TODO Dispatched', action);
+        return state;
+    } else if (action.type == UPDATE_TODO) {
 
-    } else if (action.type == 'UPDATE_TODO') {
-
-    } else if (action.type == 'DELETE_TODO') {
-
+    } else if (action.type == DELETE_TODO) {
+        console.log('Delete TODO', action.val);
+        return state;
     } else return state;
 }
 
@@ -43,9 +45,9 @@ const store = createStore(rootReducer);
 console.log(store.getState());
 
 
-// Actions
-store.dispatch({ type: 'ADD_TODO' });
-store.dispatch({ type: 'UPDATE_TODO' });
-store.dispatch({ type: 'DELETE_TODO' });
+// // Actions
+// store.dispatch({ type: 'ADD_TODO' });
+// store.dispatch({ type: 'UPDATE_TODO' });
+// store.dispatch({ type: 'DELETE_TODO' });
 
 export default rootReducer;
