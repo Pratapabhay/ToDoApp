@@ -87,7 +87,6 @@ router.delete('/', auth, async (req, res) => {
 
     try {
         const user = await User.findById(req.user.id).select('-password');
-
         await todos.findByIdAndDelete(req.body.id);
         res.status(200).json('ToDo Deleted');
 

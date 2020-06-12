@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, Checkbox, Input } from 'element-react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions';
+import * as API from '../services/todoServices';
 
 
 class AddTodo extends React.Component {
@@ -14,8 +15,25 @@ class AddTodo extends React.Component {
                 isDone: false,
                 hasAttachment: false
             },
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkYTIxZDg3ZjdlYzAwNGZiZGQ5ZWRmIn0sImlhdCI6MTU5MTM1NzAwNCwiZXhwIjoxNTkxNzE3MDA0fQ.QBuCWA7fWwjVMtbZmCdmqi_I4742SoEUHugwWvQVs8I",
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkYTIxZDg3ZjdlYzAwNGZiZGQ5ZWRmIn0sImlhdCI6MTU5MTk2Mzc2MiwiZXhwIjoxNTkyMzIzNzYyfQ.hblnUhJGsk94LqUigH4l9Fv2ZEJDtTCNk_J-xnTBV8s",
         }
+    }
+
+
+    addTodo = () => {
+        let body = {
+            todo: this.state.todo.todo,
+            isDone: this.state.todo.isDone,
+            hasAttachment: this.state.todo.hasAttachment
+        }
+        console.log('Adding ToDo');
+        API.ADD_TODO(body)
+        .then(response => {
+            this.props.FETCH_TODOS();
+        })
+        .catch(err => {
+            console.log('Error in Adding todo to database', err);
+        })
     }
 
 
@@ -24,6 +42,8 @@ class AddTodo extends React.Component {
             todo: Object.assign({}, this.state.todo, { [key]: value })
         });
     }
+
+
 
 
     render() {
@@ -57,7 +77,7 @@ class AddTodo extends React.Component {
                         <Button
                             type="primary"
                             size="medium"
-                            onClick={this.props.ADD_TODO()}>
+                            onClick={this.addTodo.bind(this)}>
                             Add Todo
                         </Button>
                     </Form.Item>
@@ -75,9 +95,7 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        ADD_TODO: (payload) => dispatch(actionCreators.addTodo(payload)),
-        UPDATE_TODO: (payload) => dispatch(actionCreators.updateTodo(payload)),
-        DELETE_TODO: (payload) => dispatch(actionCreators.deleteTodo(payload))
+        FETCH_TODOS: (payload) => dispatch(actionCreators.fetchTodos(payload)),
     }
 }
 
