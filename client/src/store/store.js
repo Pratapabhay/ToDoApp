@@ -1,5 +1,4 @@
-import { createStore } from 'redux';
-import { ADD_TODO, UPDATE_TODO, DELETE_TODO } from '../store/actions';
+import * as CONSTANTS from '../store/actionsTypes';
 
 
 const initialState = {
@@ -29,25 +28,10 @@ const initialState = {
 
 // Reducer
 const rootReducer = (state = initialState, action) => {
-    if (action.type == ADD_TODO) {
-        console.log('ADD TODO Dispatched', action);
-        return state;
-    } else if (action.type == UPDATE_TODO) {
-
-    } else if (action.type == DELETE_TODO) {
-        console.log('Delete TODO', action.val);
-        return state;
+    if (action.type == CONSTANTS.REFRESH_TODOS) {
+        console.log('Refreshed TODOS DISPATCHED', action);
+        return Object.assign({}, state, action.val);
     } else return state;
 }
-
-// Store
-const store = createStore(rootReducer);
-console.log(store.getState());
-
-
-// // Actions
-// store.dispatch({ type: 'ADD_TODO' });
-// store.dispatch({ type: 'UPDATE_TODO' });
-// store.dispatch({ type: 'DELETE_TODO' });
 
 export default rootReducer;

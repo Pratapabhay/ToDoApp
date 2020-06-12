@@ -72,57 +72,17 @@ class Todos extends Component {
         };
     }
 
-
     deleteTodo(index) {
         const { todos } = this.state;
 
         let body = {
             id: todos[index].id,
         }
-        axios({
-            method: 'delete',
-            url: 'http://localhost:5000/api/todos',
-            headers: {
-                'x-auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkYTIxZDg3ZjdlYzAwNGZiZGQ5ZWRmIn0sImlhdCI6MTU5MTM1NzAwNCwiZXhwIjoxNTkxNzE3MDA0fQ.QBuCWA7fWwjVMtbZmCdmqi_I4742SoEUHugwWvQVs8I"
-            },
-            data: body,
-        })
-            .then(res => {
-                console.log('Response', res);
-                this.fetchTodos();
-            })
-            .catch((err) => {
-                console.log('Here')
-                throw err;
-            })
-    }
-    fetchTodos() {
-        axios({
-            method: 'get',
-            url: 'http://localhost:5000/api/todos',
-            headers: {
-                'x-auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkYTIxZDg3ZjdlYzAwNGZiZGQ5ZWRmIn0sImlhdCI6MTU5MTM1NzAwNCwiZXhwIjoxNTkxNzE3MDA0fQ.QBuCWA7fWwjVMtbZmCdmqi_I4742SoEUHugwWvQVs8I"
-            }
-        })
-            .then(res => {
-                const todos = res.data;
-                console.log('Response', todos);
-                this.setState({
-                    todos: todos,
-                });
-            })
-            .catch((err) => {
-                console.log('Here')
-                throw err;
-            })
-    }
-
-    addTodo() {
-
+        this.props.DELETE_TODO(body);
     }
 
     componentDidMount() {
-        this.fetchTodos();
+        this.props.FETCH_TODOS();
     }
 
     RenderTodos() {
@@ -161,9 +121,9 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        ADD_TODO: (payload) => dispatch(actionCreators.addTodo(payload)),
         UPDATE_TODO: (payload) => dispatch(actionCreators.updateTodo(payload)),
-        DELETE_TODO: (payload) => dispatch(actionCreators.deleteTodo(payload))
+        DELETE_TODO: (payload) => dispatch(actionCreators.deleteTodo(payload)),
+        FETCH_TODOS: () => dispatch(actionCreators.syncTodos())
     }
 }
 
