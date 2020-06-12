@@ -15,30 +15,7 @@ class AddTodo extends React.Component {
                 hasAttachment: false
             },
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkYTIxZDg3ZjdlYzAwNGZiZGQ5ZWRmIn0sImlhdCI6MTU5MTM1NzAwNCwiZXhwIjoxNTkxNzE3MDA0fQ.QBuCWA7fWwjVMtbZmCdmqi_I4742SoEUHugwWvQVs8I",
-
         }
-    }
-
-    addTodo() {
-        let body = {
-            todo: this.state.todo.todo,
-            isDone: this.state.todo.isDone,
-            hasAttachment: this.state.todo.hasAttachment
-        }
-        axios({
-            method: 'post',
-            url: 'http://localhost:5000/api/todos',
-            headers: {
-                'x-auth-token': this.state.token
-            },
-            data: body
-        })
-            .then((res) => {
-                console.log('Response', res.data);
-            })
-            .catch((err) => {
-                throw err;
-            })
     }
 
 
@@ -55,15 +32,15 @@ class AddTodo extends React.Component {
                 <Form
                     ref="form"
                     className="en-US"
-                    model={this.state.todo}
+                    model = { this.state.todo }
                     labelWidth="120"
                     labelPosition="top">
                     <Form.Item
                         label="ToDo Description"
                         prop="todo">
                         <Input
-                            value={this.state.todo.todo}
-                            onChange={this.onChange.bind(this, 'todo')}>
+                            value = { this.state.todo.todo }
+                            onChange = { this.onChange.bind(this, 'todo') }>
                         </Input>
                     </Form.Item>
 
@@ -71,8 +48,8 @@ class AddTodo extends React.Component {
                         label="Has Attachment?"
                         prop="hasAttachment">
                         <Checkbox
-                            checked={this.state.todo.hasAttachment}
-                            onChange={this.onChange.bind(this, 'hasAttachment')}>
+                            checked = { this.state.todo.hasAttachment }
+                            onChange = { this.onChange.bind(this, 'hasAttachment')}>
                         </Checkbox>
                     </Form.Item>
 
@@ -80,18 +57,13 @@ class AddTodo extends React.Component {
                         <Button
                             type="primary"
                             size="medium"
-                            onClick={this.props.ADD_TODO({
-                                todo: this.state.todo.todo,
-                                isDone: this.state.todo.isDone,
-                                hasAttachment: this.state.todo.hasAttachment
-                            })}>
+                            onClick={this.props.ADD_TODO()}>
                             Add Todo
-                            </Button>
+                        </Button>
                     </Form.Item>
                 </Form>
             </div>
         )
-
     }
 }
 
