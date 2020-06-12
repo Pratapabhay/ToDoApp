@@ -30,7 +30,7 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
     if (action.type == CONSTANTS.REFRESH_TODOS) {
         console.log('Refreshed TODOS DISPATCHED', action);
-        return Object.assign({}, state, action.val);
+        return Object.assign({}, state, {todos: action.val});
     } else return state;
 }
 

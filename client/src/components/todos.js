@@ -4,7 +4,7 @@ import axios from 'axios';
 import AddTodo from './addTodo'
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions';
-
+import * as API from '../services/todoServices';
 
 class Todos extends Component {
 
@@ -40,45 +40,29 @@ class Todos extends Component {
                             <Button
                                 type="text"
                                 size="small"
-                                onClick={this.props.DELETE_TODO}>
+                                onClick={this.deleteTodo.bind(this, index)}>
                                 Delete
                             </Button>
                         </span>
                     }
                 }
-            ],
-            todos: [
-                {
-                    todo: 'Create Login Component',
-                    isDone: true,
-                    hasAttachment: false
-                },
-                {
-                    todo: 'Create ToDos Component',
-                    isDone: false,
-                    hasAttachment: false
-                },
-                {
-                    todo: 'Add Routing',
-                    isDone: false,
-                    hasAttachment: false
-                },
-                {
-                    todo: 'Set Authentication',
-                    isDone: false,
-                    hasAttachment: false
-                },
             ]
         };
     }
 
     deleteTodo(index) {
-        const { todos } = this.state;
-
+        const todos = this.props.storeTodos;
+        
         let body = {
-            id: todos[index].id,
+            id: todos[index]._id,
         }
-        this.props.DELETE_TODO(body);
+        API.DELETE_TODO(body)
+        .then(response => {
+            this.props.FETCH_TODOS();
+        })
+        .catch(err => {
+            console.log('Error in deleting todo to database', err);
+        })
     }
 
     componentDidMount() {
@@ -121,9 +105,7 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        UPDATE_TODO: (payload) => dispatch(actionCreators.updateTodo(payload)),
-        DELETE_TODO: (payload) => dispatch(actionCreators.deleteTodo(payload)),
-        FETCH_TODOS: () => dispatch(actionCreators.syncTodos())
+        FETCH_TODOS: (payload) => dispatch(actionCreators.fetchTodos(payload)),
     }
 }
 
