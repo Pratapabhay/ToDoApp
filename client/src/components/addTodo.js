@@ -15,6 +15,7 @@ class AddTodo extends React.Component {
                 isDone: false,
                 hasAttachment: false
             },
+            shouldRenderAddTodo: false,
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkYTIxZDg3ZjdlYzAwNGZiZGQ5ZWRmIn0sImlhdCI6MTU5MTk2Mzc2MiwiZXhwIjoxNTkyMzIzNzYyfQ.hblnUhJGsk94LqUigH4l9Fv2ZEJDtTCNk_J-xnTBV8s",
         }
     }
@@ -29,6 +30,7 @@ class AddTodo extends React.Component {
         console.log('Adding ToDo');
         API.ADD_TODO(body)
         .then(response => {
+            this.onChangeRender(false);
             this.props.FETCH_TODOS();
         })
         .catch(err => {
@@ -43,45 +45,56 @@ class AddTodo extends React.Component {
         });
     }
 
-
-
+    onChangeRender(value) {
+        this.setState({
+            shouldRenderAddTodo: value
+        });
+    }
 
     render() {
+
+        let addTodoForm = 
+            <Form
+                ref="form"
+                type="submit"
+                className="en-US"
+                model = { this.state.todo }
+                labelWidth="120"
+                labelPosition="top">
+                <Form.Item
+                    prop="todo">
+                    <Input
+                        placeholder="Add Task"
+                        value = { this.state.todo.todo }
+                        onChange = { this.onChange.bind(this, 'todo') }>
+                    </Input>
+                </Form.Item>
+
+                <Form.Item>
+                    <Button
+                        type="primary"
+                        size="small"
+                        onClick={this.addTodo.bind(this)}>
+                        Add Todo
+                    </Button>
+                    <Button
+                        size="small"
+                        onClick={this.onChangeRender.bind(this, false)}>
+                        Cancel
+                    </Button>
+                </Form.Item>
+            </Form>
+
+        let addTodoIcon = 
+            <i 
+                className="el-icon-plus"
+                onClick={this.onChangeRender.bind(this, true)}>
+            </i>
+
         return (
             <div>
-                <Form
-                    ref="form"
-                    className="en-US"
-                    model = { this.state.todo }
-                    labelWidth="120"
-                    labelPosition="top">
-                    <Form.Item
-                        label="ToDo Description"
-                        prop="todo">
-                        <Input
-                            value = { this.state.todo.todo }
-                            onChange = { this.onChange.bind(this, 'todo') }>
-                        </Input>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Has Attachment?"
-                        prop="hasAttachment">
-                        <Checkbox
-                            checked = { this.state.todo.hasAttachment }
-                            onChange = { this.onChange.bind(this, 'hasAttachment')}>
-                        </Checkbox>
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button
-                            type="primary"
-                            size="medium"
-                            onClick={this.addTodo.bind(this)}>
-                            Add Todo
-                        </Button>
-                    </Form.Item>
-                </Form>
+                {!this.state.shouldRenderAddTodo && addTodoIcon}
+                {this.state.shouldRenderAddTodo && addTodoForm}
             </div>
         )
     }
