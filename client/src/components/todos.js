@@ -83,14 +83,14 @@ class Todos extends Component {
 
         return (
             <div>
-                <Table
-                    style={{ width: '100%' }}
-                    columns={this.state.columns}
-                    data={this.props.storeTodos}
-                    border={true}
-                    highlightCurrentRow={true}
-                    onCurrentChange={item => console.log(item)}
-                />
+                {this.props.storeTodos.map((todo, index) => (
+                    <li key={index}>
+                        <Checkbox
+                            checked={todo.isDone}>
+                        </Checkbox>
+                    {todo.todo}
+                    </li>
+                ))}
                 <AddTodo />
             </div>
         )
