@@ -10,6 +10,17 @@ export const FETCH_TODOS = () => {
     })
 }
 
+
+export const FETCH_PROJECTS = () => {
+    return axios({
+        method: 'get',
+        url: 'http://localhost:5000/api/todos',
+        headers: {
+            'x-auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVkYTIxZDg3ZjdlYzAwNGZiZGQ5ZWRmIn0sImlhdCI6MTU5MTk2Mzc2MiwiZXhwIjoxNTkyMzIzNzYyfQ.hblnUhJGsk94LqUigH4l9Fv2ZEJDtTCNk_J-xnTBV8s"
+        }
+    })
+}
+
 export const DELETE_TODO = (payload) => {
     console.log('DELETING TODO')
     return axios({

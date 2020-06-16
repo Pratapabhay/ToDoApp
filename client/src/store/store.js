@@ -1,29 +1,24 @@
 import * as CONSTANTS from '../store/actionsTypes';
 
-
 const initialState = {
-    todos: [
+    todos: [],
+    projects: [
         {
-            todo: 'Create Login Component',
-            isDone: true,
-            hasAttachment: false
+            id: 1,
+            description: 'Project 1',
+            createdAt: '22/12/2019'
         },
         {
-            todo: 'Create ToDos Component',
-            isDone: false,
-            hasAttachment: false
+            id: 2,
+            description: 'Project 2',
+            createdAt: '10/02/2020'
         },
         {
-            todo: 'Add Routing',
-            isDone: false,
-            hasAttachment: false
-        },
-        {
-            todo: 'Set Authentication',
-            isDone: false,
-            hasAttachment: false
+            id: 3,
+            description: 'Project 3',
+            createdAt: '2/08/2020'
         }
-    ]
+    ],
 }
 
 // Reducer
@@ -31,6 +26,9 @@ const rootReducer = (state = initialState, action) => {
     if (action.type == CONSTANTS.REFRESH_TODOS) {
         console.log('Refreshed TODOS DISPATCHED', action);
         return Object.assign({}, state, {todos: action.val});
+    } else if (action.type == CONSTANTS.FETCH_PROJECTS) {
+        console.log('Refreshed Projects DISPATCHED', action);
+        return Object.assign({}, state, {projects: action.val});
     } else return state;
 }
 
