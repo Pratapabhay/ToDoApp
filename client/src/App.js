@@ -7,7 +7,6 @@ import { hot } from 'react-hot-loader/root';
 function App() {
   return (
     <div className="App">
-      <p> Hi there from Client </p>
       <Routes />
     </div>
   );

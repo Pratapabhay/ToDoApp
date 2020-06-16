@@ -1,7 +1,8 @@
 import React from "react";
 import Todos from './components/todos';
-import Login from './components/login';
-import SignUp from './components/signup';
+import Login from './pages/login';
+import SignUp from './pages/signup';
+import Projects from './pages/projects/index';
 
 
 import {
@@ -20,7 +21,7 @@ import {
 const routes = [
     {
         path: "/",
-        component: Todos
+        component: Projects,
     },
     {
         path: "/login",
@@ -38,7 +39,7 @@ export default function Routes() {
             <div>
                 <Switch>
                     <Route exact path="/">
-                        <Todos />
+                        <Projects />
                     </Route>
                     <Route path="/login">
                         <Login />

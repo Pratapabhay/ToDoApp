@@ -1,0 +1,17 @@
+.navbar {
+    width: 100vw;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.1));
+    background-color: #262626;
+}
+
+.navbar-heading {
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 50px;
+    color: #ffffff;
+    font-family: "Helvetica Neue";
+}

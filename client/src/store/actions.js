@@ -9,7 +9,7 @@ function setTodo(response) {
     }
 }
 export const fetchTodos = () => {
-    console.log('Synching...');
+    console.log('Synching Projects...');
     return (dispatch) => {
         API.FETCH_TODOS()
         .then(response => {
@@ -18,6 +18,26 @@ export const fetchTodos = () => {
         .catch(err => {
             console.log('Error in Syncing Todos');
         }) 
+    }
+}
+
+function setProjects(response) {
+    return {
+        type: CONSTANTS.FETCH_PROJECTS,
+        val: response,
+    }
+}
+
+export const fetchProjects = () => {
+    console.log('Synching Projects...');
+    return (dispatch) => {
+        API.FETCH_PROJECTS()
+        .then(response => {
+            dispatch(setProjects(response.data))
+        })
+        .catch(err => {
+            console.log('Error in Syncing Projects');
+        })
     }
 }
 
