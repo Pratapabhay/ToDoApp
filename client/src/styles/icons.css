@@ -1,0 +1,18 @@
+.icon-inactive {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    background-color: #4d4d4d;
+}
+
+.icons-active {
+    width: 20px;
+    height: 16px;
+    background-color: #cccccc;
+}
+
+.icons-active-line {
+    width: 2px;
+    height: 50px;
+    background-color: #1875f0;
+}
