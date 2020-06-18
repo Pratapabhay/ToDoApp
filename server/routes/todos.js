@@ -26,8 +26,9 @@ router.get('/', auth, async function (req, res) {
         if (!currTodo) {
             console.log('ToDo not found');
             res.status(404).json('Not Found');
+        } else {
+            res.send(currTodo);
         }
-        res.send(currTodo);
     } catch (error) {
         console.log('Error in searching project', error);
         res.status(500).json('Server Error');
@@ -38,18 +39,22 @@ router.get('/', auth, async function (req, res) {
 // @route    /api/todo
 // desc      Update todo with given id
 // @access   Private
-router.put('/', auth, async (req, res) => {
+router.patch('/', auth, async (req, res) => {
 
     try {
-        const user = await User.findById(req.user.id).select('-password');
 
-        await todos.findByIdAndUpdate(req.body.id, {
+        const updated = await todos.findByIdAndUpdate(req.body.id, {
             userId: req.user.id,
-            projectId: req.query.id,
-            id: req.body.id,
-            tasks: req.body.tasks
+            projectId: req.query.projectId,
+            task: req.body.task
         });
-        res.status(200).json('ToDo Updated');
+
+        if(!updated) {
+            res.status(404).json('Todo Not Found!')
+        } else {
+            console.log(updated);
+            res.status(200).json('ToDo Updated');
+        }
 
     } catch (error) {
         console.log(error);
@@ -65,7 +70,6 @@ router.post('/', auth, async (req, res) => {
 
     try {
         const user = await User.findById(req.user.id).select('-password');
-        console.log(req.query, user);
 
         await todos.create({
             userId: req.user.id,
@@ -87,11 +91,15 @@ router.delete('/', auth, async (req, res) => {
 
     try {
         const user = await User.findById(req.user.id).select('-password');
-        await todos.findByIdAndDelete(req.body.id);
-        res.status(200).json('ToDo Deleted');
-
+        const deleted = await todos.findByIdAndDelete(req.body.id);
+        if(!deleted) {
+            res.status(404).json('ToDo Not Found');
+        } else {
+            console.log(deleted);
+            res.status(200).json('ToDo Deleted');
+        }
     } catch (error) {
-        console.log('Error in deleting Todo', error);
+        console.log('Error in Deleting Todo', error);
         res.status(500).json('Server Error');
     }
 });
