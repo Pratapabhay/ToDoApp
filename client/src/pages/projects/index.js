@@ -20,13 +20,12 @@ class Projects extends Component {
                 <NavBar heading="PROJECTS"/>
                 <div className='projects-main'>
                     {this.props.projects.map((projectItem, index) => (
-                        <div key={index}>
-                            <ProjectCard
-                                description={projectItem.description}
-                                createdAt={projectItem.createdAt}
-                                >
-                            </ProjectCard>
-                        </div>
+                        <ProjectCard
+                            key={index}
+                            description={projectItem.description}
+                            createdAt={projectItem.createdAt}
+                            >
+                        </ProjectCard>
                     ))}
                 </div>
             </div>
