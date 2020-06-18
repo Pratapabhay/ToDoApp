@@ -2,6 +2,8 @@ import React from "react";
 import Todos from './components/todos';
 import Login from './pages/login';
 import SignUp from './pages/signup';
+import Dashboard from './pages/dashboard';
+
 import Projects from './pages/projects/index';
 
 
@@ -24,6 +26,10 @@ const routes = [
         component: Projects,
     },
     {
+        path: "/dashboard",
+        component: Dashboard,
+    },
+    {
         path: "/login",
         component: Login,
     },
@@ -40,6 +46,9 @@ export default function Routes() {
                 <Switch>
                     <Route exact path="/">
                         <Projects />
+                    </Route>
+                    <Route exact path="/dashboard">
+                        <Dashboard />
                     </Route>
                     <Route path="/login">
                         <Login />
