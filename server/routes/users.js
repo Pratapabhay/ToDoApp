@@ -14,7 +14,6 @@ const User = require('../models/user');
 // @access   Private
 // router.get('/', (req, res) => res.send('User Route'));
 
-
 router.post('/',
     [
         check('name', 'Name is required')
