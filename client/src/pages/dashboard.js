@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        FETCH_PROJECTS: (payload) => dispatch(actionCreators.fetchTodos(payload)),
+        FETCH_PROJECTS: (payload) => dispatch(actionCreators.fetchProjects(payload)),
     }
 }
 

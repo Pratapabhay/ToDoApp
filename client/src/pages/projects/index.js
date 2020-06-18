@@ -12,7 +12,7 @@ import '../../styles/projects.css'
 class Projects extends Component {
 
     componentDidMount() {
-        // this.props.FETCH_PROJECTS();
+        this.props.FETCH_PROJECTS();
     }
     render() {
         return (
@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        FETCH_PROJECTS: (payload) => dispatch(actionCreators.fetchTodos(payload)),
+        FETCH_PROJECTS: (payload) => dispatch(actionCreators.fetchProjects(payload)),
     }
 }
 

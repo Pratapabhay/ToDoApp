@@ -7,6 +7,10 @@ import * as serviceWorker from './serviceWorker';
 import thunk from 'redux-thunk'
 
 import rootReducer from './store/store';
+import API from './services/index';
+
+
+API.SET_DATABASE_URL();
 
 
 const logger = (state) => {

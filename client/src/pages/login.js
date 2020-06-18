@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Input, Form, Button } from 'element-react';
 import 'element-theme-default';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import API from '../services/index';
 
 class Login extends Component {
 
@@ -35,25 +36,19 @@ class Login extends Component {
         }
         this.refs.form.validate((valid) => {
             if (valid) {
-                console.log('submit!');
-                axios({
-                    method: 'post',
-                    url: 'http://localhost:5000/api/auth',
-                    data: body
+                API.LOGIN.LOGIN_USER(body)
+                .then(res => {
+                    const token = res.data;
+                    API.SET_TOKEN_HEADER(token);
+                    this.setState({
+                        token: token,
+                        isLoginSuccessful: true,
+                    });
                 })
-                    .then(res => {
-                        const token = res.data;
-                        this.setState({
-                            token: token,
-                            isLoginSuccessful: true,
-                        });
-                    })
-                    .catch((err) => {
-                        throw err;
-                    })
-                console.log(this.state);
+                .catch((err) => {
+                    throw err;
+                })
             } else {
-                console.log('Data is not Valid!!!');
                 return false;
             }
         });
