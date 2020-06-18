@@ -33,6 +33,7 @@ mongoose.connect(config.getDBConnectionString(), { useNewUrlParser: true, useUni
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/todos', require('./routes/todos'));
+app.use('/api/projects', require('./routes/projects'));
 
 
 app.listen(port);

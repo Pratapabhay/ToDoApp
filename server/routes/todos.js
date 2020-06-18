@@ -4,8 +4,9 @@ var auth = require('../middleware/auth');
 var jwt = require('jsonwebtoken');
 var config = require('../config');
 var bodyParser = require('body-parser');
-var todos = require('../models/todoSchema');
+var todos = require('../models/todos');
 const User = require('../models/user');
+const Projects = require('../models/projects');
 
 
 // @route    /api/todos
@@ -21,14 +22,14 @@ router.get('/', auth, async function (req, res) {
     console.log('Requested ToDos');
     try {
         const user = await User.findById(req.user.id).select('-password');
-        const currTodo = await todos.find({ userId: user.id });
+        const currTodo = await todos.find( { userId: user.id, projectId: req.query.projectId });
         if (!currTodo) {
             console.log('ToDo not found');
             res.status(404).json('Not Found');
         }
         res.send(currTodo);
     } catch (error) {
-        console.log('HEre', error);
+        console.log('Error in searching project', error);
         res.status(500).json('Server Error');
     }
 });
@@ -44,10 +45,9 @@ router.put('/', auth, async (req, res) => {
 
         await todos.findByIdAndUpdate(req.body.id, {
             userId: req.user.id,
+            projectId: req.query.id,
             id: req.body.id,
-            todo: req.body.todo,
-            isDone: req.body.isDone,
-            hasAttachment: req.body.hasAttachment
+            tasks: req.body.tasks
         });
         res.status(200).json('ToDo Updated');
 
@@ -65,16 +65,16 @@ router.post('/', auth, async (req, res) => {
 
     try {
         const user = await User.findById(req.user.id).select('-password');
+        console.log(req.query, user);
 
         await todos.create({
             userId: req.user.id,
-            todo: req.body.todo,
-            isDone: req.body.isDone,
-            hasAttachment: req.body.hasAttachment
+            projectId: req.query.projectId,
+            task: req.body.task
         });
         res.status(200).json('ToDo Added');
     } catch (error) {
-        console.log(error);
+        console.log('Error in creating Todo', error);
         res.status(500).json('Server Error')
     }
 });
@@ -91,7 +91,7 @@ router.delete('/', auth, async (req, res) => {
         res.status(200).json('ToDo Deleted');
 
     } catch (error) {
-        console.log(error);
+        console.log('Error in deleting Todo', error);
         res.status(500).json('Server Error');
     }
 });
