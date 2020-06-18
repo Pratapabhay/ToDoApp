@@ -39,7 +39,7 @@ router.get('/', auth, async function (req, res) {
 // desc      Post New ToDo
 // @access   Private
 router.post('/', auth, async (req, res) => {
-    console.log('Requested Creating New Project');
+    console.log('Requested Project Creation')
     try {
         const user = await User.findById(req.user.id).select('-password');
 
@@ -62,13 +62,12 @@ router.post('/', auth, async (req, res) => {
 router.delete('/', auth, async (req, res) => {
     console.log('Requesting Deleting Project')
     try {
-        const user = await User.findById(req.user.id).select('-password');
         const isProjectDeleted = await Projects.findByIdAndDelete(req.body.id);
         if(!isProjectDeleted) {
-            console.log('Project not found');
             res.status(404).json('Project Not Found');
+        } else {
+            res.status(200).json('Project Deleted');
         }
-        res.status(200).json('Project Deleted');
 
     } catch (error) {
         console.log('Error in deleting Project', error);
