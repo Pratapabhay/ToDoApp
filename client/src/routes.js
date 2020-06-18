@@ -1,5 +1,4 @@
 import React from "react";
-import Todos from './components/todos';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard';
