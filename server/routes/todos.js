@@ -69,7 +69,6 @@ router.patch('/', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
 
     try {
-        const user = await User.findById(req.user.id).select('-password');
 
         await todos.create({
             userId: req.user.id,
@@ -90,12 +89,10 @@ router.post('/', auth, async (req, res) => {
 router.delete('/', auth, async (req, res) => {
 
     try {
-        const user = await User.findById(req.user.id).select('-password');
         const deleted = await todos.findByIdAndDelete(req.body.id);
         if(!deleted) {
             res.status(404).json('ToDo Not Found');
         } else {
-            console.log(deleted);
             res.status(200).json('ToDo Deleted');
         }
     } catch (error) {
