@@ -8,10 +8,11 @@ export default {
         })
     },
     
-    POST_PROJECT() {
+    POST_PROJECT(payload) {
         return axios({
             method: 'post',
             url: 'api/projects',
+            data: payload,
         })
     },
     

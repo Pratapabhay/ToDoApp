@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import NavBar from '../../components/navBar';
 import ProjectCard from './projectCard';
 import '../../styles/projects.css'
+import NewProject from './newProject';
 
 class Projects extends Component {
 
@@ -27,6 +28,7 @@ class Projects extends Component {
                             >
                         </ProjectCard>
                     ))}
+                    <NewProject />
                 </div>
             </div>
         );

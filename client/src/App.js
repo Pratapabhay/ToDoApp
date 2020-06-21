@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Routes from './routes';
+import API from './services/index';
 
 
 import { hot } from 'react-hot-loader/root';

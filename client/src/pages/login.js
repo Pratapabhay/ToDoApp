@@ -28,6 +28,9 @@ class Login extends Component {
         }
     }
 
+    saveTokenToLocalStorage(token) {
+        localStorage.setItem('Token', token);
+    }
     handleSubmit(e) {
         e.preventDefault();
         let body = {
@@ -39,6 +42,7 @@ class Login extends Component {
                 API.LOGIN.LOGIN_USER(body)
                 .then(res => {
                     const token = res.data;
+                    this.saveTokenToLocalStorage(token);
                     API.SET_TOKEN_HEADER(token);
                     this.setState({
                         token: token,

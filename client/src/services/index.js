@@ -16,6 +16,8 @@ export default {
     },
 
     SET_TOKEN_HEADER(token) {
+        console.log('Setting Token', token)
+
         if (token) {
             axios.defaults.headers.common.Authorization = `${token}`;
         }

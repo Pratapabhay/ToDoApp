@@ -12,6 +12,11 @@ import API from './services/index';
 
 API.SET_DATABASE_URL();
 
+(function addTokenToAPI() {
+  const token = localStorage.getItem('Token');
+  API.SET_TOKEN_HEADER(token);
+})();
+
 
 const logger = (state) => {
   return (next) => {
@@ -28,7 +33,8 @@ const store = createStore(rootReducer, compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f));
 
-console.log('Store', store);
+
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
