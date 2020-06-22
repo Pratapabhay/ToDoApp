@@ -1,13 +1,25 @@
 // This component will show the tasks related to a particular project
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavBar from '../components/navBar';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/actions';
 import { Button } from 'element-react';
 import '../styles/todolist.css'
+import {
+    useParams
+} from "react-router-dom";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function Dashboard(props) {
     const titleArray = ['To Do', 'In Progress', 'Completed'];
+    // let { projectId } = useParams();
+    console.log(useParams(), props);
+
+    useEffect(() => {
+        console.log('Params', props, )
+    }, []) 
+
     return (
         <div>
             <NavBar

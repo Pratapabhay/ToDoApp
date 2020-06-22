@@ -23,8 +23,9 @@ class Projects extends Component {
                     {this.props.projects.map((projectItem, index) => (
                         <ProjectCard
                             key={index}
-                            description={projectItem.description}
-                            createdAt={projectItem.createdAt}
+                            projectId = { projectItem._id }
+                            description = { projectItem.description }
+                            createdAt = { projectItem.createdAt }
                             >
                         </ProjectCard>
                     ))}
