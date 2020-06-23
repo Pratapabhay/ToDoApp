@@ -6,10 +6,9 @@ import { withRouter } from "react-router-dom";
 function ProjectCard(props) {
 
     const handleProjectNavigation = () => {
-        const path = `dashboard?projectId=${props.projectId}`;
+        const path = `dashboard/${props.projectId}`;
         props.history.push({
-            pathname: '/dashboard/',
-            search: `?projectId=${props.projectId}`
+            pathname: path,
         });
     }
 

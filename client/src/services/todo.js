@@ -2,22 +2,14 @@ import axios from 'axios';
 
 export default {
 
-    FETCH_TODOS() {
+    FETCH_TODOS(payload) {
         return axios({
             method: 'get',
-            url: '/api/todos',
-        })
-    },
-    
-    FETCH_PROJECTS() {
-        return axios({
-            method: 'get',
-            url: '/api/todos',
+            url: `/api/todos?projectId=${payload}`,
         })
     },
     
     DELETE_TODO(payload) {
-        console.log('DELETING TODO')
         return axios({
             method: 'delete',
             url: '/api/todos',
@@ -25,10 +17,10 @@ export default {
         })
     },
     
-    ADD_TODO(payload) {
+    ADD_TODO(payload, projectId) {
         return axios({
             method: 'post',
-            url: '/api/todos',
+            url: `/api/todos?projectId=${payload}`,
             data: payload
         })
     },

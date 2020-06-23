@@ -19,24 +19,6 @@ import {
 // Our route config is just an array of logical "routes"
 // with `path` and `component` props, ordered the same
 // way you'd do inside a `<Switch>`.
-const routes = [
-    {
-        path: "/",
-        component: Projects,
-    },
-    {
-        path: "/dashboard/:projectId",
-        component: Dashboard,
-    },
-    {
-        path: "/login",
-        component: Login,
-    },
-    {
-        path: "/signup",
-        component: SignUp,
-    }
-];
 
 export default function Routes() {
     return (
@@ -46,7 +28,7 @@ export default function Routes() {
                     <Route exact path="/">
                         <Projects />
                     </Route>
-                    <Route exact path="/dashboard">
+                    <Route exact path="/dashboard/:projectId">
                         <Dashboard />
                     </Route>
                     <Route path="/login">

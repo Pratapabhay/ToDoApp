@@ -13,11 +13,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function Dashboard(props) {
     const titleArray = ['To Do', 'In Progress', 'Completed'];
-    // let { projectId } = useParams();
-    console.log(useParams(), props);
+    let { projectId } = useParams();
 
     useEffect(() => {
-        console.log('Params', props, )
+        props.FETCH_TASKS(projectId);
     }, []) 
 
     return (
@@ -85,7 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapActionsToProps = (dispatch) => {
     return {
-        FETCH_PROJECTS: (payload) => dispatch(actionCreators.fetchProjects(payload)),
+        FETCH_TASKS: (payload) => dispatch(actionCreators.fetchTasks(payload)),
     }
 }
 

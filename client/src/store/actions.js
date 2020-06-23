@@ -21,3 +21,24 @@ export const fetchProjects = () => {
     }
 }
 
+
+function setTasks(response) {
+    return {
+        type: CONSTANTS.SET_TASKS,
+        val: response,
+    }
+}
+
+export const fetchTasks = (payload) => {
+    console.log('Synching Tasks for project ID...', payload);
+    return (dispatch) => {
+        API.TODO.FETCH_TODOS(payload)
+        .then(response => {
+            dispatch(setTasks(response.data))
+        })
+        .catch(err => {
+            console.log('Error in Syncing Projects');
+        })
+    }
+}
+

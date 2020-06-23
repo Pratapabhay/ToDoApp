@@ -66,7 +66,7 @@ const initialState = {
 
 // Reducer
 const rootReducer = (state = initialState, action) => {
-    if (action.type == CONSTANTS.REFRESH_TODOS) {
+    if (action.type == CONSTANTS.SET_TASKS) {
         console.log('Refreshed TODOS DISPATCHED', action);
         return Object.assign({}, state, {todos: action.val});
     } else if (action.type == CONSTANTS.FETCH_PROJECTS) {
