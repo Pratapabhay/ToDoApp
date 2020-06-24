@@ -34,7 +34,22 @@ export const fetchTasks = (payload) => {
     return (dispatch) => {
         API.TODO.FETCH_TODOS(payload)
         .then(response => {
-            dispatch(setTasks(response.data))
+
+            function transformStoreData(tasks) {
+                const mappedTasks = {};
+                let allNewTasks = tasks.filter((item) => item.task.status === "NEW");
+                let allInProgressTasks = tasks.filter((item) => item.task.status === "IN_PROGRESS");
+                let allCompletedTasks = tasks.filter((item) => item.task.status === "DONE");
+                mappedTasks.todo = allNewTasks;
+                mappedTasks.inProgress = allInProgressTasks;
+                mappedTasks.completed = allCompletedTasks;
+                return mappedTasks;
+            }
+
+            const data = transformStoreData(response.data);
+            console.log('Data', data);
+
+            dispatch(setTasks(data));
         })
         .catch(err => {
             console.log('Error in Syncing Projects');

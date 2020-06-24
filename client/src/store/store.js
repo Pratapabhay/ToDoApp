@@ -1,50 +1,7 @@
 import * as CONSTANTS from '../store/actionsTypes';
 
 const initialState = {
-    todos:
-    {
-        todo: [
-            {
-                description: 'Create Redux Store for tasks',
-                dueDate: '22/12/1990',
-                createdBy: 'Abhay'
-            },
-            {
-                description: 'Concatenate redux store',
-                dueDate: '22/12/1995',
-                createdBy: 'Pratap'
-            },
-            {
-                description: 'Connect tasks with the view',
-                dueDate: '22/12/1995',
-                createdBy: 'Pratap'
-            }
-        ],
-        inProgress: [
-            {
-                description: 'Add dummy data to the todos',
-                dueDate: '22/12/2000',
-                createdBy: 'Rahul'
-            },
-            {
-                description: 'Remove redundant data from the todos',
-                dueDate: '22/12/2000',
-                createdBy: 'Yadav'
-            }
-        ],
-        completed: [
-            {
-                description: 'Create store for projects',
-                dueDate: '22/12/2000',
-                createdBy: 'Agraj'
-            },
-            {
-                description: 'Connect project data to the view',
-                dueDate: '22/12/2000',
-                createdBy: 'Kisna'
-            }
-        ]
-    },
+    todos: {},
     projects: [
         {
             id: 1,

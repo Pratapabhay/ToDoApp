@@ -2,6 +2,7 @@ import React from "react";
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard';
+import Test from './pages/test';
 
 import Projects from './pages/projects/index';
 
@@ -36,6 +37,9 @@ export default function Routes() {
                     </Route>
                     <Route path="/register">
                         <SignUp />
+                    </Route>
+                    <Route path="/test">
+                        <Test />
                     </Route>
                 </Switch>
             </div>
